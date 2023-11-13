@@ -1,51 +1,63 @@
 import java.util.Scanner;
 
-class ComplexNumber {
-    double real, imaginary;
+class Employee {
+    int empNumber;
+    String empName;
+    double basicPay;
 
-    ComplexNumber(double real, double imaginary) {
-        this.real = real;
-        this.imaginary = imaginary;
+    // Method to accept employee details
+    void getEmployeeDetails() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter Employee Number: ");
+        empNumber = scanner.nextInt();
+
+        scanner.nextLine(); // Consume the newline character left by nextInt()
+
+        System.out.print("Enter Employee Name: ");
+        empName = scanner.nextLine();
+
+        System.out.print("Enter Basic Pay: ");
+        basicPay = scanner.nextDouble();
     }
 
-    // Method to multiply two complex numbers
-    ComplexNumber multiply(ComplexNumber other) {
-        double resultReal = this.real * other.real - this.imaginary * other.imaginary;
-        double resultImaginary = this.real * other.imaginary + this.imaginary * other.real;
-        return new ComplexNumber(resultReal, resultImaginary);
-    }
+    // Method to calculate and display gross salary
+    void calculateGrossSalary() {
+        double DA = 0.2 * basicPay;
+        double HRA = 0.05 * basicPay;
+        double grossSalary = basicPay + DA + HRA;
 
-    // Method to display the complex number
-    void display() {
-        System.out.println("Result: " + real + " + " + imaginary + "i");
+        System.out.println("\nEmployee Details:");
+        System.out.println("Employee Number: " + empNumber);
+        System.out.println("Employee Name: " + empName);
+        System.out.println("Basic Pay: " + basicPay);
+        System.out.println("DA (20% of Basic Pay): " + DA);
+        System.out.println("HRA (5% of Basic Pay): " + HRA);
+        System.out.println("Gross Salary: " + grossSalary);
     }
 }
 
-public class ComplexNumberMultiplier {
+public class EmployeeDetailsProgram {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter the first complex number:");
-        System.out.print("Real part: ");
-        double real1 = scanner.nextDouble();
-        System.out.print("Imaginary part: ");
-        double imaginary1 = scanner.nextDouble();
+        System.out.print("Enter the number of employees: ");
+        int n = scanner.nextInt();
 
-        System.out.println("Enter the second complex number:");
-        System.out.print("Real part: ");
-        double real2 = scanner.nextDouble();
-        System.out.print("Imaginary part: ");
-        double imaginary2 = scanner.nextDouble();
+        // Create an array of Employee objects
+        Employee[] employees = new Employee[n];
 
-        // Create complex number objects
-        ComplexNumber complex1 = new ComplexNumber(real1, imaginary1);
-        ComplexNumber complex2 = new ComplexNumber(real2, imaginary2);
+        // Input details for each employee
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for Employee " + (i + 1) + ":");
+            employees[i] = new Employee();
+            employees[i].getEmployeeDetails();
+        }
 
-        // Multiply the complex numbers
-        ComplexNumber result = complex1.multiply(complex2);
-
-        // Display the result
-        result.display();
+        // Calculate and display gross salary for each employee
+        for (Employee employee : employees) {
+            employee.calculateGrossSalary();
+        }
 
         scanner.close();
     }
