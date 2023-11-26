@@ -1,0 +1,126 @@
+class EligibilityException extends Exception {
+    EligibilityException(String message) {
+        super(message);
+    }
+}
+
+class Voter {
+    int age;
+    Voter(int age) {
+        this.age=age;
+    }
+    void checkEligibility() throws EligibilityException {
+        if(age<18) 
+            throw new EligibilityException("Not eligible to vote, age must be 18 or above");
+        else
+            System.out.println("Eligible to vote");
+    }
+}
+
+class Eligibility_61 {
+    public static void main(String args[]) {
+        Voter v=new Voter(17);
+        try {
+            v.checkEligibility();
+        } catch(EligibilityException e) {
+            System.out.println("Exception: "+e.getMessage());
+        }
+    }
+}
+
+import java.io.*;
+public class Test
+{
+	public static void main(String ars[])
+	{
+		
+		int i;
+		String str;
+		try
+		{
+			str="";
+			FileReader fr=new FileReader("input.txt");
+			FileWriter fw1=new FileWriter("even.txt");
+			FileWriter fw2=new FileWriter("odd.txt");
+			while((i=fr.read())!=-1)
+			{
+				
+				if((char)i !='\n')
+					str=str+(char)i;
+				else
+				{
+					int num=Integer.parseInt(str);
+					if (num%2==0)
+					{
+						fw1.write(str);
+						fw1.write("\n");
+					
+					}
+					else
+					{
+						fw2.write(str);
+						fw2.write("\n");
+					}
+					str="";
+				}
+			}
+			fr.close();
+			fw1.close();
+			fw2.close();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	
+	}
+
+}import java.io.*;
+
+
+class File_61 {
+    public static void main(String args[]) {
+        int i;
+        int wordCount=0,lineCount=0;
+        try {
+            FileReader fr=new FileReader("input.txt");
+            i=fr.read();
+            while(i!=-1) {
+                if(i=='\n')
+                    lineCount++;
+                if(i==' '||i=='\n')
+                    wordCount++;
+                i=fr.read();
+                
+            }
+            fr.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Number of words="+wordCount);
+        System.out.println("Number of lines="+lineCount);
+    }
+}
+import java.io.*;
+
+class CopyFile_61 {
+    public static void main(String args[]) {
+        int i;
+        try {
+            FileReader fr=new FileReader("input.txt");
+            FileWriter fw=new FileWriter("output.txt");
+            i=fr.read();
+            while(i!=-1) {
+                fw.write(i);
+                i=fr.read();
+            }
+            fr.close();
+            fw.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
