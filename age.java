@@ -1,5 +1,13 @@
 import java.io.*;
-public class Test
+public class Test#!/bin/bash
+
+echo "filename ???"
+read fn
+
+for f in $fn
+ do
+   cat $f
+done
 {
 	public static void main(String ars[])
 	{
