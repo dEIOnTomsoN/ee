@@ -1,3 +1,74 @@
+#include <stdio.h>
+
+// Structure to represent a process
+struct Process {
+    int process_id;
+    int arrival_time;
+    int burst_time;
+};
+
+// Function to swap two processes
+void swap(struct Process *xp, struct Process *yp) {
+    struct Process temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+// Function to perform selection sort based on burst time
+void selectionSort(struct Process processes[], int n) {
+    int i, j, min_idx;
+    for (i = 0; i < n - 1; i++) {
+        min_idx = i;
+        for (j = i + 1; j < n; j++)
+            if (processes[j].burst_time < processes[min_idx].burst_time)
+                min_idx = j;
+
+        swap(&processes[min_idx], &processes[i]);
+    }
+}
+
+// Function to perform SJF scheduling
+void sjf(struct Process processes[], int n) {
+    selectionSort(processes, n);
+
+    printf("Process ID\tArrival Time\tBurst Time\n");
+    int total_waiting_time = 0;
+    int total_turnaround_time = 0;
+    int current_time = 0;
+    for (int i = 0; i < n; i++) {
+        printf("%d\t\t%d\t\t%d\n", processes[i].process_id, processes[i].arrival_time, processes[i].burst_time);
+        if (current_time < processes[i].arrival_time)
+            current_time = processes[i].arrival_time;
+        total_waiting_time += current_time - processes[i].arrival_time;
+        current_time += processes[i].burst_time;
+        total_turnaround_time += current_time - processes[i].arrival_time;
+    }
+
+    printf("\nAverage Waiting Time: %.2f\n", (float)total_waiting_time / n);
+    printf("Average Turnaround Time: %.2f\n", (float)total_turnaround_time / n);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+
+    // Array of processes
+    struct Process processes[n];
+
+    // Input arrival times and burst times
+    for (int i = 0; i < n; i++) {
+        printf("Enter arrival time for process %d: ", i + 1);
+        scanf("%d", &processes[i].arrival_time);
+        printf("Enter burst time for process %d: ", i + 1);
+        scanf("%d", &processes[i].burst_time);
+        processes[i].process_id = i + 1;
+    }
+
+    sjf(processes, n);
+
+    return 0;
+}
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
